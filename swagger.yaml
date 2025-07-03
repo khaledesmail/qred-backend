@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: Qred Backend API
+  version: 1.0.0
+  description: API for Qred mobile app dashboard and transactions
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/mobile-view/company-card:
+    get:
+      summary: Get company and card info
+      responses:
+        '200':
+          description: Company and card info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyCardResponse'
+              examples:
+                success:
+                  value:
+                    companyName: Company AB
+                    cardArtUrl: https://via.placeholder.com/150
+                    isCardActive: true
+                    hasSupportContact: true
+  /api/mobile-view/credit:
+    get:
+      summary: Get credit info
+      responses:
+        '200':
+          description: Credit info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+              examples:
+                success:
+                  value:
+                    availableCredit:
+                      used: 5400
+                      limit: 10000
+                      currency: kr
+                    hasInvoiceDue: true
+  /api/mobile-view/transactions:
+    get:
+      summary: Get paginated transactions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 3
+      responses:
+        '200':
+          description: Paginated transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPaginatedResponse'
+              examples:
+                success:
+                  value:
+                    total: 57
+                    page: 1
+                    limit: 3
+                    hasMore: true
+                    remainingCount: 54
+                    transactions:
+                      - data: Transaction data
+                        points: Data points
+                        created_at: '2024-07-03T12:00:00Z'
+                        amount: 2000
+components:
+  schemas:
+    CompanyCardResponse:
+      type: object
+      properties:
+        companyName:
+          type: string
+        cardArtUrl:
+          type: string
+        isCardActive:
+          type: boolean
+        hasSupportContact:
+          type: boolean
+    CreditResponse:
+      type: object
+      properties:
+        availableCredit:
+          type: object
+          properties:
+            used:
+              type: integer
+            limit:
+              type: integer
+            currency:
+              type: string
+        hasInvoiceDue:
+          type: boolean
+    Transaction:
+      type: object
+      properties:
+        data:
+          type: string
+        points:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        amount:
+          type: integer
+    TransactionsPaginatedResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        hasMore:
+          type: boolean
+        remainingCount:
+          type: integer
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction' 
