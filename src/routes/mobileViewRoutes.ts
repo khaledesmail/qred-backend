@@ -7,4 +7,4 @@ router.get('/company-card', getCompanyCard);
 router.get('/credit', getCredit);
 router.get('/transactions', getPaginatedTransactions);
 
-export default router; 
+export default router;

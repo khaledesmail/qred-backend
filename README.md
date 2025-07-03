@@ -16,7 +16,6 @@ This project is a backend implementation for the Qred mobile app view, as descri
 - `src/models/` - Sequelize ORM models (used for database operations)
 - `src/config/` - Database configuration
 
-> If you need pure TypeScript interfaces for API responses, use a separate folder like `src/types/`.
 
 ## Setup Instructions
 1. Install dependencies:
@@ -31,11 +30,7 @@ This project is a backend implementation for the Qred mobile app view, as descri
    PGDATABASE=your_db_name
    PGPORT=5432
    ```
-3. Initialize the database:
-   ```bash
-   psql -U your_db_user -d your_db_name -f scripts/init_db.sql
-   ```
-4. Start the development server:
+3. Start the development server:
    ```bash
    npm run dev
    ```
